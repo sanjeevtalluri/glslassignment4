@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fshader.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="vshader.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="dragon.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Apple.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="asu.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="goblet.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="head.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="heart.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="helm.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="house.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="king.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="klingon.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="mushroom.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pear.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="r2.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="seashell.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="space_shuttle.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="space_station.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Sword01.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="teapot.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="volks.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="x29_plane.off">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sphere2.off">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="glew.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InitShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="off_io.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="example1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="off_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wglew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Angel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\mat4x4.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glm\vec3.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
