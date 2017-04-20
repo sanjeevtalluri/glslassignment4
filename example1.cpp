@@ -2,7 +2,9 @@
 // which are sent to vertex shader where rotation takes place
 #include "off_io.h"
 #include "Angel.h"
-
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 
 
@@ -16,7 +18,7 @@ float camX, camY, camZ;
 
 // Mouse Tracking Variables
 int startX, startY, tracking = 0;
-
+int cur_file=0;
 // Camera Spherical Coordinates
 float alpha = 40.0f, beta = 45.0f;
 float r = 5.25f;
@@ -50,7 +52,9 @@ color4 vertex_colors[8] = {
 enum { Xaxis = 0, Yaxis = 1, Zaxis = 2, NumAxes = 3 };
 int Axis = Yaxis;
 GLfloat Theta[NumAxes] = { 0.0, 0.0, 0.0 };
-
+char* shaderfile[2][2] = {"vshader.glsl","fshader.glsl",
+                            "vshader2.glsl","fshader2.glsl"};
+bool hasnormal = 1;
 GLfloat vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -94,6 +98,81 @@ GLfloat vertices[] = {
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
+void assimploadmodel()
+{
+	string path("monkey.obj");
+	//string path("nanosuit.obj");
+	//string path("dragon.off");
+	Assimp::Importer imp;
+	const aiScene* scene = imp.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+	 if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
+    {
+        cout << "ERROR::ASSIMP::" << imp.GetErrorString() << endl;
+        return;
+    }
+	  aiMesh* mesh=NULL;
+	 if(scene->mRootNode->mNumMeshes>0)
+	 {
+        mesh = scene->mMeshes[scene->mRootNode->mMeshes[0]]; 
+	 }
+	 else if(scene->mRootNode->mNumChildren>0){
+		 mesh = scene->mMeshes[scene->mRootNode->mChildren[0]->mMeshes[0]]; 
+	 }
+	 if(mesh){
+		graphicdragon.nVertices=mesh->mNumVertices;
+	    graphicdragon.pVertices=new GLfloat[graphicdragon.nVertices*3];
+
+    for(GLuint i = 0; i < mesh->mNumVertices; i++)
+    {
+       for(int j=0;j<3;j++)
+		{
+			graphicdragon.pVertices[3*i+j]=mesh->mVertices[i][j];
+		}
+    }
+
+	graphicdragon.nTris=mesh->mNumFaces;
+	graphicdragon.pIndices=new GLuint[graphicdragon.nTris*3];
+
+	for(int i=0;i<graphicdragon.nTris;i++)
+	{
+		for(int j=0;j<3;j++)
+		{
+			graphicdragon.pIndices[3*i+j]=mesh->mFaces[i].mIndices[j];
+		}
+	}
+
+	std::cout<<graphicdragon.pIndices[1];
+	graphicdragon.pNormals=new GLfloat[graphicdragon.nVertices*3];
+
+	if(mesh->mNormals!=NULL){
+		cur_file=0;
+		hasnormal=true;
+		for(int i=0;i<graphicdragon.nVertices;i++)
+		{
+			for(int j=0;j<3;j++)
+			{
+				graphicdragon.pNormals[3*i+j]=mesh->mNormals[i][j];
+			}
+		}
+	}else{
+		cur_file=1;
+		hasnormal=false;
+	}
+
+    // Process indices
+   
+    // Process material
+ //   if(mesh->mMaterialIndex >= 0)
+  //  {
+        //...
+   // }
+
+   // return Mesh(vertices, indices, textures);	
+    
+	 }
+	
+}
 
 GLuint theta; // The location of the "theta" shader uniform variable
 //----------------------------------------------------------------------
@@ -151,11 +230,12 @@ init(void)
 	//camX=0;
     //camY=0;
 	//camZ=-10;
-
-	//ifstream drag("dragon.off",std::ifstream::in);
+	assimploadmodel();
+/*
+	 ifstream drag("dragon.off",std::ifstream::in);
 	//ifstream drag("klingon.off",std::ifstream::in);
 	//ifstream drag("goblet.off",std::ifstream::in);
-	ifstream drag("sphere2.off",std::ifstream::in);
+	//ifstream drag("sphere2.off",std::ifstream::in);
 
 	off_io modelloader;
 	
@@ -198,10 +278,10 @@ init(void)
 		}
 	}
 
-
+	*/
 	//colorcube();
 	// Load shaders and use the resulting shader program
-	GLuint program = InitShader("vshader.glsl", "fshader.glsl");
+	GLuint program = InitShader(shaderfile[cur_file][0], shaderfile[cur_file][1]);
 	glUseProgram(program);
 
 	// Create a vertex array object
@@ -228,12 +308,13 @@ init(void)
 	glBindBuffer(GL_ARRAY_BUFFER, buffer3);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)* graphicdragon.nVertices*3,graphicdragon.pNormals, GL_STATIC_DRAW);
 	
+	if(hasnormal){
 	GLuint vNormal = glGetAttribLocation(program, "vnormal");
 	glEnableVertexAttribArray(vNormal);
 	glVertexAttribPointer(vNormal, 3, GL_FLOAT, GL_FALSE,3 * sizeof(GLfloat),(GLvoid*)0);
 	glBindVertexArray(0);
-	lightdirection=glm::vec3(10,3,1);
-
+	lightdirection=glm::vec3(-100,3,1);
+	}
 
 	/*GLuint vNormal = glGetAttribLocation(program, "vColor");
 	glEnableVertexAttribArray(vColor);

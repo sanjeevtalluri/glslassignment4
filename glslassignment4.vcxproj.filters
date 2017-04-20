@@ -84,6 +84,9 @@
     <None Include="sphere2.off">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="fshader2.glsl">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glew.c">
@@ -136,5 +139,10 @@
     <ClInclude Include="glm\vec3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="vshader2.glsl">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ uniform mat4 view;
 uniform vec3 ldir;
 uniform vec3 eyepos;
 //vec3 diffuse=vec3(1,0,0);
-vec3 ambient=vec3(0,0,1);
+vec3 ambient=vec3(0.2,0.6,1);
 vec4 specular=vec4(1,1,1,1);
 float shininess=2;
 vec3 diffuse=vec3(1,0.5,0.1);
@@ -46,16 +46,16 @@ void main()
    vec4 spec;
 
    // transform normal to camera space and normalize it
-    vec3 n =vec3 (normalize(view * model* vec4(vnormal,1)));
+    vec3 n =vec3 (normalize( model* vec4(vnormal,1)));
 
 	 // compute the intensity as the dot product
     // the max prevents negative intensity values
-    float intensity = max(dot(n, ldir), 0.0);
+    float intensity = max(dot(n, normalize(ldir)), 0.0);
 
 	 // if the vertex is lit compute the specular term
     if (intensity > 0.0) {
         // compute position in camera space
-        vec3 pos = vec3(view*model * vec4(vPosition,1));
+        vec3 pos = vec3(model * vec4(vPosition,1));
         // compute eye vector and normalize it 
         vec3 eye = normalize(-pos);
         // compute the half vector
@@ -70,10 +70,12 @@ void main()
 	//diffuse+=vPosition;
 
 	 // Compute the color per vertex
-     // color = max(intensity * vec4(diffuse,1)+spec,vec4(ambient,1));
-     // color = (spec);
+      color = max(intensity * vec4(diffuse,1)+spec,vec4(ambient,1));
+	     
+      //color = (spec);
+      //color = (vec4(ambient,1));
       
-      color = max(intensity * vec4(diffuse,1),vec4(ambient,1));
+     // color = max(intensity * vec4(diffuse,1),vec4(ambient,1));
       // color = (intensity * vec4(diffuse,1));
 
 	   gl_Position = (projection*view*model)*vec4(vPosition,1);
